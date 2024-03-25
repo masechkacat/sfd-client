@@ -3,7 +3,7 @@ import {
   useUpdateProfile,
   useUploadAvatar,
   useUser,
-} from "@/auth/configureAuth";
+} from "@/request-query/configRequests";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";

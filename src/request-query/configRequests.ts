@@ -2,7 +2,7 @@
 import { configureAuth } from "react-query-auth";
 import { createAPI } from "../services/api";
 import { saveToken, dropToken, getToken } from "../services/token";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { dropIsSeller } from "@/services/userRole";
 
@@ -13,6 +13,15 @@ interface UserData {
   username: string;
   fullName: string;
   description: string;
+}
+
+interface DashboardData {
+  gigsCount: number;
+  ordersCount: number;
+  unreadMessagesCount: number;
+  dailyRevenue: number;
+  monthlyRevenue: number;
+  annualRevenue: number;
 }
 
 const authConfig = {
@@ -73,6 +82,17 @@ const useUploadAvatar = () => {
   });
 };
 
+const useDashboardData = () => {
+  return useQuery<DashboardData>({
+    queryKey: ["dashboard"],
+    queryFn: async () => {
+      const response = await api.get("/dashboard");
+      return response.data;
+    },
+    staleTime: 1000 * 60 * 5, // данные будут считаться устаревшими через 5 минут
+  });
+};
+
 export const { useUser, useLogin, useRegister, useLogout } =
   configureAuth(authConfig);
-export { useUpdateProfile, useUploadAvatar };
+export { useUpdateProfile, useUploadAvatar, useDashboardData };

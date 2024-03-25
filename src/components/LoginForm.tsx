@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useLogin, useRegister } from "../auth/configureAuth";
+import { useLogin, useRegister } from "../request-query/configRequests";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { MdFacebook } from "react-icons/md";

@@ -1,9 +1,13 @@
 "use client";
-import EditProfile from "@/components/EditProfile";
+import UserProfile from "@/components/UserProfile";
 import withAuth from "@/hoc/withAuth";
 
-function EditProfilePage() {
-  return <EditProfile />;
+function UserProfilePage() {
+  return (
+    <div className="pt-28">
+      <UserProfile />;
+    </div>
+  );
 }
 
-export default withAuth(EditProfilePage);
+export default withAuth(UserProfilePage);

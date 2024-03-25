@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { useUser, useLogout } from "../auth/configureAuth";
+import { useUser, useLogout } from "../request-query/configRequests";
 import { IoSearchOutline } from "react-icons/io5";
 import Image from "next/image";
 import FiverrLogo from "../static/FiverrLogo";

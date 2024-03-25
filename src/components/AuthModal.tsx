@@ -3,7 +3,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment, useEffect } from "react";
 import { useAuthModal } from "../context/AuthModalContext"; // Импорт кастомного хука
-import { useUser } from "../auth/configureAuth"; // Импорт хука для доступа к данным пользователя
+import { useUser } from "../request-query/configRequests"; // Импорт хука для доступа к данным пользователя
 
 interface AuthModalProps {
   children: React.ReactNode;

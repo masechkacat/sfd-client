@@ -18,14 +18,6 @@ export default function HomePage() {
   const { openModal, closeModal, isModalOpen } = useAuthModal();
 
   useEffect(() => {
-    console.log(
-      "Signin:",
-      searchParams.get("signin"),
-      "Signup:",
-      searchParams.get("signup"),
-      "Modal Open:",
-      isModalOpen
-    );
     if (searchParams.get("signin") || searchParams.get("signup")) {
       openModal();
     } else if (isModalOpen) {
