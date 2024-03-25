@@ -1,0 +1,6 @@
+{
+  "prettier.enableDebugLogs": true,
+  "vs-code-prettier-eslint.prettierLast": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
