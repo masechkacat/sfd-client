@@ -3,8 +3,9 @@ import { configureAuth } from "react-query-auth";
 import { createAPI } from "../services/api";
 import { saveToken, dropToken, getToken } from "../services/token";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { dropIsSeller } from "@/services/userRole";
+import { ListGig } from "@/utils/types";
 
 const api = createAPI();
 
@@ -93,6 +94,59 @@ const useDashboardData = () => {
   });
 };
 
+const useSearchGigs = (q: string = "", category: string = "") => {
+  return useQuery<ListGig[]>({
+    queryKey: ["searchGigs", q, category],
+    queryFn: async () => {
+      const response = await api.get(
+        `/gigs?searchTerm=${q}&category=${category}`
+      );
+      return response.data;
+    },
+    enabled: true, // всегда включать запрос
+  });
+};
+
+const useGigDetails = (id: string) => {
+  return useQuery<ListGig>({
+    queryKey: ["gigDetails", id],
+    queryFn: async () => {
+      const response = await api.get(`/gigs/${id}`);
+      return response.data;
+    },
+    enabled: !!id, // выполнять запрос только если id определен
+  });
+};
+
+const useCreateOrderIntent = () => {
+  return useMutation<string, Error, number>({
+    mutationFn: async (gigId: number) => {
+      console.log("from reaxt quert", gigId);
+      const { data } = await api.post(`/orders/create`, { gigId });
+      return data.clientSecret;
+    },
+  });
+};
+
+const useConfirmOrder = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (paymentIntent: string) =>
+      api.post("/orders/confirm", { paymentIntent }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+    },
+  });
+};
+
 export const { useUser, useLogin, useRegister, useLogout } =
   configureAuth(authConfig);
-export { useUpdateProfile, useUploadAvatar, useDashboardData };
+export {
+  useUpdateProfile,
+  useUploadAvatar,
+  useDashboardData,
+  useSearchGigs,
+  useGigDetails,
+  useCreateOrderIntent,
+  useConfirmOrder,
+};

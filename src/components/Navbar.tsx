@@ -203,9 +203,11 @@ const Navbar = () => {
                   <Image
                     src={user.profileImage}
                     alt="Profile"
-                    width={40}
-                    height={40}
-                    className="rounded-full"
+                    height="0"
+                    width="0"
+                    sizes="100vw"
+                    className="rounded-full object-cover w-14 h-14"
+                    priority
                   />
                 ) : (
                   <div className="bg-purple-500 h-10 w-10 flex items-center justify-center rounded-full relative">
@@ -227,65 +229,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-//   return (
-//     <nav className="bg-white px-4 py-2 flex justify-between items-center shadow-md">
-//       <Link href="/" className="text-xl font-bold">
-//         <FiverrLogo fillColor={"#1DBF73"} />
-//       </Link>
-//       <div className="flex">
-//         <input
-//           type="text"
-//           className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
-//           value={searchData}
-//           onChange={(e) => setSearchData(e.target.value)}
-//           placeholder="Search..."
-//         />
-//         <button
-//           type="submit"
-//           className="absolute right-2.5 bottom-2.5 bg-blue-500 text-white font-bold text-xs px-4 py-1 rounded shadow hover:bg-blue-400 focus:outline-none focus:ring"
-//           onClick={() => router.push(`/search?q=${searchData}`)}
-//         >
-//           <IoSearchOutline className="text-xl" />
-//         </button>
-//       </div>
-//       <div>
-//         {isLoading ? (
-//           <div className="flex items-center space-x-4"> Loading...</div>
-//         ) : user ? (
-//           <div className="flex items-center space-x-4">
-//             <span className="text-sm">{user.email}</span>
-//             {user.profileImage && (
-//               <Image
-//                 src={user.profileImage}
-//                 alt="Profile"
-//                 width={40}
-//                 height={40}
-//                 className="rounded-full"
-//                 style={{ width: "auto", height: "auto" }}
-//               />
-//             )}
-//             <button
-//               className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-400"
-//               disabled={logout.isLoading}
-//               onClick={handleLogout}
-//             >
-//               Logout
-//             </button>
-//           </div>
-//         ) : (
-//           <div className="flex items-center space-x-4">
-//             <button
-//               className="text-blue-500 hover:text-blue-400"
-//               onClick={() => router.push("/?signin=true")}
-//             >
-//               Sign In
-//             </button>
-//           </div>
-//         )}
-//       </div>
-//     </nav>
-//   );
-// };
-
-// export default Navbar;

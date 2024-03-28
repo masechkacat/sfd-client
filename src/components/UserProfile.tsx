@@ -20,9 +20,10 @@ const UserProfile: React.FC = () => {
                   <Image
                     src={userInfo.profileImage}
                     alt="Profile"
-                    width={140}
-                    height={140}
-                    className="rounded-full"
+                    width="0"
+                    height="0"
+                    sizes="100vw"
+                    className="rounded-full object-cover h-24 w-24"
                   />
                 ) : (
                   <div className="bg-purple-500 h-24 w-24 flex items-center justify-center rounded-full relative">
