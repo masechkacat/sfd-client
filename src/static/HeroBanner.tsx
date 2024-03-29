@@ -17,14 +17,14 @@ function HomeBanner() {
 
   return (
     <div className="h-[680px] relative bg-cover">
-      <div className="absolute top-0 right-0 w-[110vw] h-full transition-opacity z-0">
+      <div className="absolute top-0 right-0 w-[100vw] h-full transition-opacity z-0">
         <Image
           alt="hero"
           src="/bg-hero1.jpg"
           fill
           className={`${
             image === 1 ? "opacity-100" : "opacity-0"
-          } transition-all duration-1000`}
+          } transition-all duration-1000 transform scale-x-[-1]`}
         />
         <Image
           alt="hero"
@@ -36,7 +36,7 @@ function HomeBanner() {
         />
         <Image
           alt="hero"
-          src="/bg-hero3.jpg"
+          src="/bg-hero6.jpg"
           fill
           className={`${
             image === 3 ? "opacity-100" : "opacity-0"
@@ -44,7 +44,7 @@ function HomeBanner() {
         />
         <Image
           alt="hero"
-          src="/bg-hero4.jpg"
+          src="/hero-2.png"
           fill
           className={`${
             image === 4 ? "opacity-100" : "opacity-0"
@@ -52,7 +52,7 @@ function HomeBanner() {
         />
         <Image
           alt="hero"
-          src="/bg-hero5.jpg"
+          src="/bg-hero3.jpg"
           fill
           className={`${
             image === 5 ? "opacity-100" : "opacity-0"
@@ -60,7 +60,7 @@ function HomeBanner() {
         />
         <Image
           alt="hero"
-          src="/bg-hero6.jpg"
+          src="/bg-hero4.jpg"
           fill
           className={`${
             image === 6 ? "opacity-100" : "opacity-0"

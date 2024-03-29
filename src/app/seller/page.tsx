@@ -5,7 +5,7 @@ import withAuth from "@/hoc/withAuth";
 
 function SellerPage() {
   return (
-    <div className="flex flex-col gap-10 pt-28">
+    <div className="flex flex-col gap-10">
       <UserProfile />
       <Dashboard />
     </div>

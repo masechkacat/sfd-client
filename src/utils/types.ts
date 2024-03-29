@@ -28,3 +28,20 @@ export type User = {
   profileImage: string | null;
   createdAt: string;
 };
+
+export type Order = {
+  id: number;
+  createdAt: string;
+  buyerId: number;
+  paymentIntent: string;
+  isCompleted: boolean;
+  gigId: number;
+  price: number;
+  buyer: User;
+  gig: ListGig;
+};
+
+export type OrdersTableProps = {
+  orders: Order[] | undefined;
+  isSeller: boolean;
+};

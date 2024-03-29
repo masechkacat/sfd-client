@@ -5,7 +5,7 @@ import { saveToken, dropToken, getToken } from "../services/token";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { dropIsSeller } from "@/services/userRole";
-import { ListGig } from "@/utils/types";
+import { ListGig, Order } from "@/utils/types";
 
 const api = createAPI();
 
@@ -107,6 +107,41 @@ const useSearchGigs = (q: string = "", category: string = "") => {
   });
 };
 
+const useUserGigs = () => {
+  return useQuery<ListGig[]>({
+    queryKey: ["userGigs"],
+    queryFn: async () => {
+      const response = await api.get("/gigs/user/me");
+      return response.data;
+    },
+    enabled: true, // всегда включать запрос
+  });
+};
+
+const useBuyerOrders = () => {
+  return useQuery<Order[]>({
+    queryKey: ["buyerOrders"],
+    queryFn: async () => {
+      const response = await api.get("/orders/buyer");
+      return response.data;
+    },
+    staleTime: 1000 * 60 * 5,
+    enabled: true,
+  });
+};
+
+const useSellerOrders = () => {
+  return useQuery<Order[]>({
+    queryKey: ["sellerOrders"],
+    queryFn: async () => {
+      const response = await api.get("/orders/seller");
+      return response.data;
+    },
+    staleTime: 1000 * 60 * 5,
+    enabled: true,
+  });
+};
+
 const useGigDetails = (id: string) => {
   return useQuery<ListGig>({
     queryKey: ["gigDetails", id],
@@ -149,4 +184,7 @@ export {
   useGigDetails,
   useCreateOrderIntent,
   useConfirmOrder,
+  useUserGigs,
+  useBuyerOrders,
+  useSellerOrders,
 };

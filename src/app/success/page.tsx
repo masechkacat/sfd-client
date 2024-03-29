@@ -8,9 +8,6 @@ function Success() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const payment_intent = searchParams.get("payment_intent");
-  // const router = useRouter();
-  // const { payment_intent } = router.query;
-  // const confirmOrder = useConfirmOrder();
 
   useEffect(() => {
     if (payment_intent) {

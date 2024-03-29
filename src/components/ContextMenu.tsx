@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import React, { MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 
 interface DataItem {
   name: string;

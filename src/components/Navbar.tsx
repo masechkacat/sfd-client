@@ -9,6 +9,7 @@ import FiverrLogo from "../static/FiverrLogo";
 import ContextMenu from "./ContextMenu";
 import { getIsSeller, saveIsSeller } from "@/services/userRole";
 import { links } from "@/utils/navLinks";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Navbar = () => {
   const { data: user, isLoading } = useUser();
@@ -19,15 +20,16 @@ const Navbar = () => {
   const [navFixed, setNavFixed] = useState(false);
   const [isContextMenuVisible, setIsContextMenuVisible] = useState(false);
   const [isSeller, setIsSeller] = useState(getIsSeller());
+  const queryClient = useQueryClient();
 
   const handleLogout = async () => {
     await logout.mutateAsync();
+    queryClient.clear();
     router.push("/");
   };
 
   const handleOrdersNavigate = () => {
-    if (isSeller) router.push("/seller/orders");
-    router.push("/buyer/orders");
+    router.push(isSeller ? "/seller/orders" : "/buyer/orders");
   };
 
   const handleModeSwitch = () => {
@@ -63,7 +65,7 @@ const Navbar = () => {
         e.stopPropagation();
 
         setIsContextMenuVisible(false);
-        router.push("/profile");
+        router.push("/profile/edit");
       },
     },
     {
@@ -93,7 +95,7 @@ const Navbar = () => {
     <>
       {!isLoading && (
         <nav
-          className={`w-full px-24 flex justify-between items-center py-6  top-0 z-30 transition-all duration-300 ${
+          className={`w-full px-16 flex justify-between items-center py-4  top-0 z-30 transition-all duration-300 ${
             navFixed || user
               ? "fixed bg-white border-b border-gray-200"
               : "absolute bg-transparent border-transparent"
@@ -127,7 +129,7 @@ const Navbar = () => {
             </button>
           </div>
           {!user ? (
-            <ul className="flex gap-10 items-center">
+            <ul className="flex gap-6 items-center">
               {links.map(({ linkName, href, type }) => {
                 return (
                   <li
@@ -206,7 +208,7 @@ const Navbar = () => {
                     height="0"
                     width="0"
                     sizes="100vw"
-                    className="rounded-full object-cover w-14 h-14"
+                    className="rounded-full object-cover w-10 h-10"
                     priority
                   />
                 ) : (

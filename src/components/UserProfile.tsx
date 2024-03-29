@@ -12,7 +12,7 @@ const UserProfile: React.FC = () => {
   return (
     <>
       {userInfo && (
-        <div className="flex max-h-[80vh] my-10 mt-0 px-32 gap-5">
+        <div className="flex max-h-[70vh] my-10 mt-0 px-32 gap-5 pt-32">
           <div className="shadow-md h-max p-10 flex flex-col gap-5 min-w-96 w-96">
             <div className="flex gap-5 justify-center items-center">
               <div>
@@ -24,6 +24,7 @@ const UserProfile: React.FC = () => {
                     height="0"
                     sizes="100vw"
                     className="rounded-full object-cover h-24 w-24"
+                    priority
                   />
                 ) : (
                   <div className="bg-purple-500 h-24 w-24 flex items-center justify-center rounded-full relative">
