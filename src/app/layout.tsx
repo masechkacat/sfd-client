@@ -4,7 +4,6 @@ import "./globals.css";
 import { QueryProvider } from "../components/QueryProvider";
 import Navbar from "../components/Navbar";
 import { AuthModalProvider } from "../context/AuthModalContext";
-import AuthModal from "../components/AuthModal";
 
 const inter = Inter({ subsets: ["latin"] });
 

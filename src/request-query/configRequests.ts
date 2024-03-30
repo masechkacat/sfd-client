@@ -5,25 +5,17 @@ import { saveToken, dropToken, getToken } from "../services/token";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { dropIsSeller } from "@/services/userRole";
-import { ListGig, Order } from "@/utils/types";
+import {
+  DashboardData,
+  ListGig,
+  MessagesResponse,
+  Order,
+  SendMessageParams,
+  UnreadMessage,
+  UserData,
+} from "@/utils/types";
 
 const api = createAPI();
-
-interface UserData {
-  email: string;
-  username: string;
-  fullName: string;
-  description: string;
-}
-
-interface DashboardData {
-  gigsCount: number;
-  ordersCount: number;
-  unreadMessagesCount: number;
-  dailyRevenue: number;
-  monthlyRevenue: number;
-  annualRevenue: number;
-}
 
 const authConfig = {
   loginFn: async (credentials: { email: string; password: string }) => {
@@ -174,6 +166,65 @@ const useConfirmOrder = () => {
   });
 };
 
+// Запрос для получения сообщений
+const useMessages = (orderId: string) => {
+  return useQuery<MessagesResponse>({
+    queryKey: ["messages", orderId],
+    queryFn: async () => {
+      const { data } = await api.get(`/messages/orders/${orderId}`);
+      return data;
+    },
+  });
+};
+
+// Мутация для отправки сообщений
+const useSendMessage = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ orderId, text, recipientId }: SendMessageParams) => {
+      const { data } = await api.post(`/messages/${recipientId}`, {
+        orderId,
+        text,
+      });
+      return data;
+    },
+    onSuccess: () => {
+      // After a successful message send, we need to update the message cache
+      queryClient.invalidateQueries({ queryKey: ["messages"] });
+    },
+  });
+};
+
+const useUnreadMessages = ({ orderId = "" }) => {
+  return useQuery<UnreadMessage[]>({
+    queryKey: ["unreadMessages", orderId],
+    queryFn: async () => {
+      // orderId добавляется к запросу только если он не пустой
+      const endpoint = orderId
+        ? `/messages/unread?orderId=${orderId}`
+        : `/messages/unread`;
+      const { data } = await api.get(endpoint);
+      return data;
+    },
+    enabled: !!orderId || orderId === "", // Запрос активен, если orderId предоставлен или интересуют все сообщения
+  });
+};
+
+const useMarkMessageAsRead = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (messageId: number) => {
+      const { data } = await api.put(`/messages/read/${messageId}`);
+      return data;
+    },
+    onSuccess: () => {
+      // После успешного обновления сообщения, мы должны обновить кэш сообщений
+      queryClient.invalidateQueries({ queryKey: ["unreadMessages"] });
+    },
+  });
+};
+
 export const { useUser, useLogin, useRegister, useLogout } =
   configureAuth(authConfig);
 export {
@@ -187,4 +238,8 @@ export {
   useUserGigs,
   useBuyerOrders,
   useSellerOrders,
+  useMessages,
+  useSendMessage,
+  useUnreadMessages,
+  useMarkMessageAsRead,
 };

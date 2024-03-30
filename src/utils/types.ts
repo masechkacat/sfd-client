@@ -45,3 +45,44 @@ export type OrdersTableProps = {
   orders: Order[] | undefined;
   isSeller: boolean;
 };
+
+export type SendMessageParams = {
+  orderId: number;
+  text: string;
+  recipientId: number;
+};
+
+export type UserData = {
+  email: string;
+  username: string;
+  fullName: string;
+  description: string;
+};
+
+export type DashboardData = {
+  gigsCount: number;
+  ordersCount: number;
+  unreadMessagesCount: number;
+  dailyRevenue: number;
+  monthlyRevenue: number;
+  annualRevenue: number;
+};
+
+export type Message = {
+  id: number;
+  text: string;
+  createdAt: string;
+  isRead: boolean;
+  senderId: number;
+  recipientId: number;
+  orderId: number;
+};
+
+export type UnreadMessage = Message & {
+  sender: User;
+};
+
+export type MessagesResponse = {
+  messages: Message[];
+  recipientId: number;
+};
