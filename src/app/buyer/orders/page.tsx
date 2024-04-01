@@ -2,6 +2,7 @@
 "use client";
 import OrdersTable from "@/components/OrdersTable";
 import { useBuyerOrders } from "@/request-query/configRequests";
+import withAuth from "@/hoc/withAuth";
 
 function BuyerOrdersPage() {
   const { data: orders, isLoading, isError } = useBuyerOrders();
@@ -12,4 +13,4 @@ function BuyerOrdersPage() {
   return <OrdersTable orders={orders} isSeller={false} />;
 }
 
-export default BuyerOrdersPage;
+export default withAuth(BuyerOrdersPage);

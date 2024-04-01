@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 export type ListGig = {
   id: number;
   title: string;
@@ -85,4 +87,55 @@ export type UnreadMessage = Message & {
 export type MessagesResponse = {
   messages: Message[];
   recipientId: number;
+};
+
+export type MessageContainerProps = {
+  messages: MessagesResponse;
+  orderId: string;
+  user: User;
+};
+
+export type AuthModalProps = {
+  children: React.ReactNode;
+};
+
+export type DataItem = {
+  name: string;
+  callback: MouseEventHandler<HTMLLIElement>;
+};
+
+export type LoginFormProps = {
+  isRegisterMode: boolean;
+};
+
+export type ReviewsProps = {
+  reviews: Review[]; // Замените Review на тип вашего отзыва
+  averageRating: number;
+  totalReviewsCount: number;
+};
+
+export type Review = {
+  id: number;
+  createdAt: string;
+  rating: number;
+  reviewText: string;
+  gigId: number;
+  reviewerId: number;
+  reviewer: User;
+};
+
+export type CreateReviewDto = {
+  reviewText: string;
+  rating: number;
+};
+
+export type GigFormData = {
+  title: string;
+  category: string;
+  description: string;
+  time: string;
+  revisions: string;
+  features: string[]; // предполагаем, что это массив строк
+  price: string;
+  shortDesc: string;
 };

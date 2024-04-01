@@ -3,13 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaRegPaperPlane } from "react-icons/fa";
 import { BsCheckAll } from "react-icons/bs";
 import { useSendMessage } from "@/request-query/configRequests";
-import { MessagesResponse, User } from "@/utils/types";
-
-interface MessageContainerProps {
-  messages: MessagesResponse;
-  orderId: string;
-  user: User;
-}
+import { MessageContainerProps } from "@/utils/types";
 
 function MessageContainer({ messages, orderId, user }: MessageContainerProps) {
   const [recipientId, setRecipientId] = useState<number | undefined>(undefined);

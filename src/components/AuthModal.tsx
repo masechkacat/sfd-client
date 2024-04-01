@@ -4,10 +4,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment, useEffect } from "react";
 import { useAuthModal } from "../context/AuthModalContext"; // Импорт кастомного хука
 import { useUser } from "../request-query/configRequests"; // Импорт хука для доступа к данным пользователя
+import { AuthModalProps } from "@/utils/types";
 
-interface AuthModalProps {
-  children: React.ReactNode;
-}
 const AuthModal: React.FC<AuthModalProps> = ({ children }) => {
   const { isModalOpen, closeModal } = useAuthModal(); // Использование кастомного хука для доступа к состоянию и функциям контекста
   const user = useUser(); // Получение данных пользователя

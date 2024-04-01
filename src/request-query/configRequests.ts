@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { dropIsSeller } from "@/services/userRole";
 import {
+  CreateReviewDto,
   DashboardData,
   ListGig,
   MessagesResponse,
@@ -71,6 +72,32 @@ const useUploadAvatar = () => {
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["profile"] });
+    },
+  });
+};
+
+const useCreateGig = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (formData: FormData) => {
+      const token = getToken();
+      return axios.post(
+        "https://apiforspotfordev.onrender.com/gigs/create",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["searchGigs"] });
+      queryClient.invalidateQueries({ queryKey: ["userGigs"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      queryClient.invalidateQueries({ queryKey: ["gigDetails"] });
     },
   });
 };
@@ -225,6 +252,36 @@ const useMarkMessageAsRead = () => {
   });
 };
 
+const useCheckOrder = (gigId: number) => {
+  return useQuery({
+    queryKey: ["checkOrder", gigId],
+    queryFn: async () => {
+      // Проверяем, что gigId предоставлен перед выполнением запроса
+      if (!gigId) {
+        throw new Error("gigId is required to check order");
+      }
+      const { data } = await api.get(`/gigs/checkOrder/${gigId}`);
+      return data.hasUserOrderedGig;
+    },
+    enabled: !!gigId, // Запускаем запрос, только если gigId предоставлен
+  });
+};
+
+const useAddReview = (gigId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (review: CreateReviewDto) =>
+      api.post(`/reviews/${gigId}`, review),
+    onSuccess: () => {
+      // После успешного добавления отзыва, мы должны обновить кэш отзывов
+      queryClient.invalidateQueries({
+        queryKey: ["gigDetails", gigId.toString()],
+      });
+    },
+  });
+};
+
 export const { useUser, useLogin, useRegister, useLogout } =
   configureAuth(authConfig);
 export {
@@ -242,4 +299,7 @@ export {
   useSendMessage,
   useUnreadMessages,
   useMarkMessageAsRead,
+  useCheckOrder,
+  useAddReview,
+  useCreateGig,
 };

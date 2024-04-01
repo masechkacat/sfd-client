@@ -1,7 +1,8 @@
 "use client";
 import { useConfirmOrder } from "@/request-query/configRequests";
 import { useSearchParams, useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import withAuth from "@/hoc/withAuth";
 
 function Success() {
   const confirmOrder = useConfirmOrder();
@@ -28,4 +29,4 @@ function Success() {
   );
 }
 
-export default Success;
+export default withAuth(Success);

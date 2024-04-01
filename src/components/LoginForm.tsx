@@ -5,9 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { MdFacebook } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
-interface LoginFormProps {
-  isRegisterMode: boolean;
-}
+import { LoginFormProps } from "@/utils/types";
 
 const LoginForm: React.FC<LoginFormProps> = ({ isRegisterMode }) => {
   const [email, setEmail] = useState("");

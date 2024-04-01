@@ -1,11 +1,6 @@
 "use client";
-import React from "react";
 
-interface FiverrLogoProps {
-  fillColor: string;
-}
-
-function FiverrLogo({ fillColor }: FiverrLogoProps) {
+function FiverrLogo({ fillColor }: { fillColor: string }) {
   return (
     <svg
       version="1.0"

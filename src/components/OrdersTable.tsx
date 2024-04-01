@@ -28,14 +28,18 @@ const OrderRow = ({ order, isSeller }: { order: Order; isSeller: boolean }) => {
       <td className="px-6 py-4 flex justify-center">
         <Link
           href={`/${isSeller ? "seller" : "buyer"}/orders/messages/${order.id}`}
-          className="relative text-2xl text-blue-600 hover:underline inline-block"
+          className="relative inline-flex items-center p-2 text-xl font-medium text-center text-white bg-[#1DBF73] rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 "
         >
-          {!isLoading && unreadMessages && unreadMessages.length > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2 py-1 text-xs">
-              {unreadMessages.length}
-            </span>
-          )}
           <TiMessages />
+
+          {!isLoading && unreadMessages && unreadMessages.length > 0 && (
+            <>
+              <span className="sr-only">Notifications</span>
+              <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 ">
+                {unreadMessages.length}
+              </div>
+            </>
+          )}
         </Link>
       </td>
     </tr>

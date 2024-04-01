@@ -6,6 +6,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "@/components/CheckoutForm";
 import { useCreateOrderIntent } from "@/request-query/configRequests";
 import { useSearchParams } from "next/navigation";
+import withAuth from "@/hoc/withAuth";
 
 const stripePromise = loadStripe(
   "pk_test_51OAeB8D8gl5KJjJk03Gw3QgDsJ1ktdCwZUbSkVXImxQzCENcLkxh1CeYN8SXBaop58e1HmRXuRdwpoUBaEEYxr3Z00azLUiCKr"
@@ -59,4 +60,4 @@ function Checkout() {
   );
 }
 
-export default Checkout;
+export default withAuth(Checkout);

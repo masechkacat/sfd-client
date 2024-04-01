@@ -3,9 +3,13 @@ import { ListGig } from "@/utils/types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
+import Reviews from "./Reviews";
+import AddReview from "./AddReview";
+import { useCheckOrder } from "@/request-query/configRequests";
 
 function Details({ gigData }: { gigData: ListGig }) {
   const [currentImage, setCurrentImage] = useState("");
+  const { data: hasOrdered } = useCheckOrder(gigData.id);
 
   useEffect(() => {
     if (gigData) {
@@ -157,8 +161,12 @@ function Details({ gigData }: { gigData: ListGig }) {
               </div>
             </div>
           </div>
-          {/* <Reviews />
-          {hasOrdered && <AddReview />} */}
+          <Reviews
+            reviews={gigData.reviews}
+            averageRating={gigData.averageRating}
+            totalReviewsCount={gigData.totalReviewsCount}
+          />
+          {hasOrdered && <AddReview gigId={gigData.id} />}
         </div>
       )}
     </>
